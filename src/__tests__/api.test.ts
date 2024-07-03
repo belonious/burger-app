@@ -1,7 +1,7 @@
 import { login, getIngredients, host } from '../services/api';
 import { getAccessToken, storeAccessToken } from '../services/storage';
 
-jest.mock('../services/storage'); // Mock storage functions
+jest.mock('../services/storage');
 
 
 describe('auth', () => {
@@ -78,7 +78,7 @@ describe('auth', () => {
                 method: 'GET',
                 headers: {
                     Authorization: `Bearer ${mockAccessToken}`,
-                    'Content-Type': 'application/json', // Might be optional based on server
+                    'Content-Type': 'application/json',
                 },
             });
             expect(res.ingredients).toHaveLength(3)
@@ -88,7 +88,7 @@ describe('auth', () => {
             const mockAccessToken = 'valid_token';
             getAccessToken.mockReturnValue(mockAccessToken);
             const mockResponse = { message: 'Failed to retrieve ingredients' };
-            
+
             global.fetch = jest.fn(() =>
                 Promise.resolve({
                     ok: false,

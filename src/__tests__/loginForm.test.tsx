@@ -1,7 +1,5 @@
 import React from 'react';
-import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
-import App from '../App';
-import { ProviderWrapperHome } from '../test-utils'
+import { act, fireEvent, render, screen } from '@testing-library/react';
 import { login } from '../services/api';
 import { useNavigate } from 'react-router-dom';
 import * as api from '../services/api';
@@ -11,14 +9,7 @@ jest.mock('react-router-dom', () => ({
     useNavigate: jest.fn(() => { return () => {}}),
 }));
 
-// jest.mock('../services/api', () => ({
-//     login: jest.fn((u, p) => {
-//         return u === 'error' ? Promise.reject('Login failed') : Promise.resolve({});
-//     }),
-//     getIngredients: jest.fn(() => {
-//         return Promise.resolve([{ id: 1, name: 'tomatoe', src: 'tomatoe.png' }])
-//     })
-// }));
+
 const mockedIngredients = [
     { id: '1', name: 'tomato', src: 'tomato.png' },
     { id: '2', name: 'potato', src: 'potato.png' },
@@ -31,7 +22,6 @@ describe('LoginForm', () => {
         api.login = jest.fn();
     });
     it('should render the form elements', () => {
-        // render(<App />, {wrapper: ProviderWrapperHome});
         render(<LoginForm />);
 
         expect(screen.getByLabelText('Name:')).toBeInTheDocument();
@@ -82,12 +72,7 @@ describe('LoginForm', () => {
             fireEvent.change(passwordInput, { target: { value: 'password123' } });
             fireEvent.submit(submitButton);
             expect(login).toHaveBeenCalledWith('error', 'password123');
-            // expect(screen.getByText(/Login failed/i)).toBeInTheDocument();
         })
         expect(screen.getByText(/Login failed/i)).toBeInTheDocument();
     });
-});
-
-afterEach(() => {
-    jest.clearAllMocks()
 });

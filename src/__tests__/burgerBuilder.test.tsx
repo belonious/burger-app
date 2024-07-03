@@ -25,13 +25,9 @@ describe('BurgerBuilder', () => {
 
         const { getByAltText } = render(<BurgerBuilder />);
 
-        // Wait for the ingredients to be populated
         const ingredientOptions = await screen.findAllByRole('img', { name: /tomato|potato/ });
-
-        // Check if the ingredients are displayed
         expect(ingredientOptions).toHaveLength(2);
 
-        // Click to add an ingredient
         fireEvent.click(ingredientOptions[0]); // Add tomato
         fireEvent.click(ingredientOptions[1]); // Add potato
 
@@ -50,7 +46,7 @@ describe('BurgerBuilder', () => {
         fireEvent.click(ingredientOptions[0]);
         fireEvent.click(ingredientOptions[1]);
 
-        // remove potato
+
         const potato = screen.getByTestId('potato_0')
         fireEvent.click(potato);
         screen.debug();
